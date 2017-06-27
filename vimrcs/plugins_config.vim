@@ -78,6 +78,10 @@ let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
+let g:NERDTreeChDirMode = 2 " Set pwd to current directory
+
+autocmd BufEnter * if &ft !~ '^nerdtree$' | silent! lcd %:p:h | endif
+
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>

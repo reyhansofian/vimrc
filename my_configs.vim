@@ -17,15 +17,9 @@ set textwidth=120
 
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" set autochdir
-
-autocmd BufEnter * if &ft !~ '^nerdtree$' | silent! lcd %:p:h | endif
 
 let g:python_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
-
-" NERDTree
-let g:NERDTreeChDirMode = 2 " Set pwd to current directory
 
 " }}}
 
