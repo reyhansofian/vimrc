@@ -21,6 +21,9 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 let g:python_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
+" Neomake
+" autocmd InsertChange,TextChanged * update | Neomake
+
 " }}}
 
 " Section User Interface {{{
@@ -34,6 +37,8 @@ set number
 
 " make backspace behave in a sane manner
 set backspace=indent,eol,start
+
+colorscheme onedark
 
 " Tab control
 set noexpandtab             " insert tabs rather than spaces for <Tab>
