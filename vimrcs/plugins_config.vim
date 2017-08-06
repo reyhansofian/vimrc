@@ -40,7 +40,7 @@ nmap <c-P> <Plug>yankstack_substitute_newer_paste
 """"""""""""""""""""""""""""""
 " => CTRL-P
 """"""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
 
 let g:ctrlp_map = '<c-f>'
 map <leader>j :CtrlP<cr>
@@ -105,20 +105,19 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'powerline',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \             ['fugitive', 'readonly', 'relativePath', 'modified'] ],
       \   'right': [ [ 'lineinfo' ], ['percent'] ]
       \ },
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
       \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_function': {
+      \   'relativePath': 'RelativePathToFilename'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
@@ -128,6 +127,12 @@ let g:lightline = {
       \ 'separator': { 'left': ' ', 'right': ' ' },
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
+
+function! RelativePathToFilename()
+  " %{pathshorten(fnamemodify(expand('%'),':~:.'))}
+  " set stl+=%{substitute(fnamemodify(expand('%'),':~:.'),'\\([^/\\\\]\\)[^/\\\\]*[/\\\\]','\\1\\2/','g')}
+  return pathshorten(fnamemodify(expand('%'),':~:.'))
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vimroom
@@ -211,6 +216,70 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Neomake 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neomake_javascript_eslint_exe = 'eslint'
-let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_javascript_eslint_exe = 'eslint'
+" let g:neomake_javascript_enabled_makers = ['eslint']
+" autocmd InsertChange,TextChanged * update | Neomake
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Neoformat 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:neoformat_javascript_prettier = {
+            \ 'exe': 'prettier',
+            \ 'args': ['--single-quote'],
+            \ 'replace': 0,
+            \ 'stdin': 1,
+            \ 'no_append': 1
+            \ }
+
+let g:neoformat_javascript_eslint = {
+            \ 'exe': 'eslint',
+            \ 'args': ['--stdin', '--fix'],
+            \ 'replace': 0,
+            \ 'stdin': 1,
+            \ 'no_append': 1
+            \ }
+
+let g:neoformat_javascript_eslint_d = {
+            \ 'exe': 'eslint_d',
+            \ 'args': ['--stdin', '--fix'],
+            \ 'replace': 0,
+            \ 'stdin': 1,
+            \ 'no_append': 1
+            \ }
+
+let g:neoformat_enabled_javascript = ['prettier', 'eslint', 'eslint_d']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Emmet 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => SuperTab 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => UltiSnips 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger           = '<tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<tab><tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => ALE 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ale_linters = {
+\   'javascript': ['eslint', 'flow'],
+\}

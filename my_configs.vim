@@ -41,7 +41,7 @@ set backspace=indent,eol,start
 colorscheme onedark
 
 " Tab control
-set noexpandtab             " insert tabs rather than spaces for <Tab>
+" set noexpandtab             " insert tabs rather than spaces for <Tab>
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=4               " the visible width of tabs
 set softtabstop=4           " edit as if the tabs are 4 characters wide
@@ -89,6 +89,9 @@ set visualbell
 set t_vb=
 set tm=500
 
+" relative line number
+set rnu
+
 if has('mouse')
     set mouse=a
     " set ttymouse=xterm2
@@ -105,3 +108,9 @@ let g:airline#extensions#tabline#show_buffers = 0 " do not show open buffers in 
 let g:airline#extensions#tabline#show_splits = 0
 
 " }}}
+
+let g:jsx_ext_required = 0
+
+if filereadable(glob(".vimrc.local")) 
+    source .vimrc.local
+endif
